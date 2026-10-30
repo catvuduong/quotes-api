@@ -16,8 +16,12 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
+  it('/ (GET) describes the API and its endpoints', async () => {
+    const res = await request(app.getHttpServer()).get('/').expect(200);
+
+    expect(res.body.name).toBe('Quotes API');
+    expect(res.body.docs).toBe('/docs');
+    expect(res.body.endpoints).toEqual(expect.arrayContaining([expect.stringContaining('GET /quotes')]));
   });
 
   it('/health (GET)', async () => {

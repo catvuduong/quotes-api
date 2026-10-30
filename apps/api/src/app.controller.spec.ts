@@ -17,8 +17,13 @@ describe('AppController', () => {
     appController = app.get<AppController>(AppController);
   });
 
-  it('should return "Hello World!"', () => {
-    expect(appController.getHello()).toBe('Hello World!');
+  it('describes the API and its endpoints', () => {
+    const description = appController.describe();
+
+    expect(description.name).toBe('Quotes API');
+    expect(description.endpoints).toEqual(
+      expect.arrayContaining([expect.stringContaining('DELETE /quotes/:id')]),
+    );
   });
 
   it('health reports db disabled without DATABASE_URL', async () => {

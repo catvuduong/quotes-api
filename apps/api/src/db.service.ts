@@ -4,6 +4,9 @@ import { Pool } from 'pg';
 // Add new tables here as extra statements; they are all created once, behind a lock.
 const SCHEMA = [
   'CREATE TABLE IF NOT EXISTS items (id SERIAL PRIMARY KEY, title TEXT NOT NULL, created_at TIMESTAMPTZ DEFAULT now())',
+  'CREATE TABLE IF NOT EXISTS quotes (id SERIAL PRIMARY KEY, text TEXT NOT NULL, author TEXT NOT NULL, category TEXT NOT NULL, language TEXT NOT NULL DEFAULT \'en\', created_at TIMESTAMPTZ NOT NULL DEFAULT now())',
+  // Makes seeding idempotent and turns a duplicate POST into a 409.
+  'CREATE UNIQUE INDEX IF NOT EXISTS quotes_text_author_key ON quotes (text, author)',
 ];
 
 @Injectable()
