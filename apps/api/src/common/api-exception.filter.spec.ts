@@ -1,5 +1,4 @@
-import { ArgumentsHost, BadRequestException, Logger, NotFoundException } from '@nestjs/common';
-import { ThrottlerException } from '@nestjs/throttler';
+import { ArgumentsHost, BadRequestException, HttpException, Logger, NotFoundException } from '@nestjs/common';
 import { ApiExceptionFilter } from './api-exception.filter.js';
 
 function hostCapturing() {
@@ -44,7 +43,7 @@ describe('ApiExceptionFilter', () => {
   it('keeps the status of throttling errors', () => {
     const { host, res } = hostCapturing();
 
-    filter.catch(new ThrottlerException(), host);
+    filter.catch(new HttpException('Too many requests', 429), host);
 
     expect(res.status).toHaveBeenCalledWith(429);
     expect(res.json).toHaveBeenCalledWith(
