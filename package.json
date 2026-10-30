@@ -1,0 +1,14 @@
+{
+  "name": "quotes-api",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "lint": "npm run lint --workspace api",
+    "test": "npm run test --workspace api",
+    "build": "npm run build --workspace api",
+    "e2e": "npm run test:e2e --workspace api",
+    "verify": "npm run lint && npm run test && npm run build && npm run e2e"
+  }
+}
