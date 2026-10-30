@@ -23,7 +23,19 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A public REST API for famous quotes, built with [Nest](https://github.com/nestjs/nest) and PostgreSQL.
+
+- `GET /` describes the API; `GET /docs` serves the Swagger UI, and `GET /docs-json` the OpenAPI document.
+- Read endpoints are public. `POST /quotes` and `DELETE /quotes/:id` need an `x-api-key` header.
+- The table is created on startup and seeded with public-domain quotes (`src/quotes/quotes.seed.ts`).
+- Rate limit: 60 requests per minute per IP.
+
+Environment variables:
+
+| Name             | Purpose                                                                 |
+| ---------------- | ----------------------------------------------------------------------- |
+| `DATABASE_URL`   | PostgreSQL connection string. Without it the quotes endpoints return 503. |
+| `QUOTES_API_KEY` | Value expected in the `x-api-key` header. Unset means all writes are refused. |
 
 ## Project setup
 
